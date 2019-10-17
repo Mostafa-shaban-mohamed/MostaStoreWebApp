@@ -1,0 +1,52 @@
+﻿@model MostaStoreWebApp.Models.User
+
+@{
+    Layout = null;
+    ViewBag.Title = "Create";
+}
+
+<h2>Register</h2>
+    
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true)
+        <div style="border: solid 1px #ccc; padding: 30px 0 30px 30px; border-radius: 5px;
+        width: 325px; margin: auto; display: table;">
+            <table>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.UName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.UName, new { htmlAttributes = new { @class = "form-control" } })
+                        <div style="height: 20px;">
+                            @Html.ValidationMessageFor(model => model.UName, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.UPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.UPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        <div style="height: 20px;">
+                            @Html.ValidationMessageFor(model => model.UPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

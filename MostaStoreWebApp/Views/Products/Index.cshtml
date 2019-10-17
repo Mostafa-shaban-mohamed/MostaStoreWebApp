@@ -1,0 +1,220 @@
+﻿@model IEnumerable<MostaStoreWebApp.Models.Product>
+
+@{
+    
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/LUX.bootstrap.min.css">
+
+<h2>SmartPhones</h2>
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:600px; margin:auto;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <input type="button" value="New Product" onclick="location.href='@Url.Action("Create")'" style="background-color:steelblue"/>
+</p>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <p style="float:right">
+        @Html.TextBox("SearchName")
+        <input type="submit" value="Search" />
+    </p>
+    <div class="sorted" style="float:left">
+        Sorting: @Html.DropDownList("Sorting", new SelectList(new List<string> { "ModelName", "Quantity", "SIMCard", "FrontCam", "BackCam", "Screen", "PhoneSize", "RAM" }), "Select the sorting")
+        <input type="submit" value="Submit" />
+    </div>
+}
+
+<table border="1" id="EmployeeList" class="table table-bordered table-condensed tablesorter">
+    <tr>
+        <th style="background-color:lightskyblue">
+            ModelName
+        </th>
+        <th style="background-color:lightskyblue">
+            Quantity
+        </th>
+        <th style="background-color:lightskyblue">
+            SIMCard
+        </th>
+        <th style="background-color:lightskyblue">
+            FrontCam
+        </th>
+        <th style="background-color:lightskyblue">
+            BackCam
+        </th>
+        <th style="background-color:lightskyblue">
+            Screen
+        </th>
+        <th style="background-color:lightskyblue">
+            PhoneSize
+        </th>
+        <th style="background-color:lightskyblue">
+            RAM
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SIMCard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrontCam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BackCam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Screen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RAM)
+            </td>
+            <td>
+                <a href="javascript:void(0);" class="anchorEdit" data-id="@item.ID">Edit</a> |
+                <a href="javascript:void(0);" class="anchorDetail" data-id="@item.ID">Details</a> |
+                <a href="javascript:void(0);" class="anchorDelete" data-id="@item.ID">Delete</a>
+                
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="ExportSection">
+    @Html.ActionLink("Export to Csv", "ExportCSV")
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script>
+        
+        $(function () {
+            $(".anchorDetail").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: '/Products/Details',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+    </script>
+
+<script>
+
+    $(function () {
+        $(".anchorEdit").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '/Products/Edit',
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+
+<script>
+
+    var TeamDetailPostBackURL = '/Products/Delete';
+    $(function () {
+        $(".anchorDelete").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '/Products/Delete',
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+
+}

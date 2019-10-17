@@ -1,0 +1,84 @@
+﻿@model MostaStoreWebApp.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal" style="margin-left: 10px">
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SIMCard)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SIMCard)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FrontCam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrontCam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BackCam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BackCam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Screen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Screen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RAM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RAM)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+ 
+
